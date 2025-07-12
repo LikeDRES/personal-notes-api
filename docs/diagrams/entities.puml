@@ -1,0 +1,23 @@
+@startuml
+title Diagrama de Entidades - Personal Notes API
+
+entity "User" as User {
+  * id : UUID
+  * name : string
+  * email : string
+  * password : string
+  * createdAt : Date
+  * updatedAt : Date
+}
+
+entity "Note" as Note {
+  * id : UUID
+  * title : string
+  * content : string
+  * createdAt : Date
+  * updatedAt : Date
+}
+
+User ||--o{ Note : owns
+
+@enduml

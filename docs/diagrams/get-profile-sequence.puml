@@ -1,0 +1,21 @@
+@startuml
+title Diagrama de Secuencia - GET /users/me
+
+actor Usuario
+participant "Postman/Frontend" as Client
+participant "AuthGuard (JWT)" as Guard
+participant "UsersController" as Controller
+participant "UsersService" as Service
+database "DB" as Database
+
+Usuario -> Client : Solicita perfil
+Client -> Guard : Authorization: Bearer <token>
+Guard -> Guard : Verifica y decodifica token
+Guard -> Controller : user in request.user
+Controller -> Service : findByEmail(request.user.email)
+Service -> Database : SELECT * FROM users WHERE email = ?
+Database --> Service : User
+Service --> Controller : User
+Controller --> Client : UserResponseDto
+
+@enduml
