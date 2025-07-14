@@ -1,133 +1,144 @@
-# 📝 Personal Notes API
+# 📝 Personal Notes (Fullstack App)
 
-API RESTful para la gestión de notas personales, construida con **NestJS** y **MySQL**. Proyecto desarrollado como **prueba técnica**, enfocado en buenas prácticas de arquitectura, seguridad y documentación profesional.
+Aplicación web fullstack para gestión de notas personales, desarrollada como **prueba técnica** con enfoque en buenas prácticas de arquitectura, seguridad, documentación y diseño moderno.
 
----
-
-## 🚀 Características principales
-
-- 🔐 Autenticación segura con JWT (Passport.js)
-- 👤 Registro y login de usuarios
-- 🗃️ CRUD completo de notas (solo accesibles por su dueño)
-- 🛡️ Guards personalizados para validación de ownership
-- ⚙️ Middlewares globales: logging, sanitización de headers, validación de UUID
-- ❗ Filtro global de errores con JSON Problem (RFC 7807)
-- 🧩 API versionada (`/api/v1`)
-- 📚 Documentación Swagger (OpenAPI)
-- 🐳 Dockerizado para ejecución local y despliegue
+- 🧠 Backend: NestJS + MySQL + JWT
+- 💻 Frontend: Next.js 15 + Tailwind + ShadCN/UI
+- 🐳 Docker: Orquestación con Docker Compose
 
 ---
 
+## 🚀 Funcionalidades principales
 
-## 📌 Requisitos Funcionales
+### 🔐 Backend (API RESTful)
 
-- RF1: El usuario podrá registrarse proporcionando nombre, email y contraseña.
-- RF2: El usuario podrá iniciar sesión y recibir un token JWT.
-- RF3: El usuario podrá crear, consultar, actualizar y eliminar sus propias notas.
-- RF4: El sistema deberá validar que solo el propietario pueda manipular sus notas.
+- Registro y login de usuarios
+- Autenticación segura con JWT
+- CRUD completo de notas personales (solo accesibles por su dueño)
+- Guards personalizados (propiedad de recurso)
+- API versionada (`/api/v1`)
+- Documentación Swagger
+- Middleware de sanitización, logger, UUID validation
+- Manejo global de errores con JSON Problem (RFC 7807)
 
-## ⚙️ Requisitos No Funcionales
+### 💻 Frontend (SPA con Server Components)
 
-- RNF1: La API debe seguir el estándar RESTful.
-- RNF2: El sistema debe estar dockerizado para facilitar el despliegue.
-- RNF3: Las respuestas de error deben seguir el estándar JSON Problem (RFC 7807).
-- RNF4: Las rutas deben estar protegidas con autenticación JWT.
-- RNF5: Todas las entidades deben validar sus datos con DTOs y validadores.
-
----
-
-## 🛠️ Tecnologías utilizadas
-
-- **NestJS 11+**
-- **TypeORM**
-- **MySQL**
-- **Passport + JWT**
-- **Docker & Docker Compose**
-- **Swagger / OpenAPI**
-- **ESLint + Prettier**
+- Autenticación con JWT y persistencia de sesión
+- Interfaz moderna y responsiva (ShadCN UI)
+- Formularios validados manualmente
+- CRUD completo de notas (crear, ver, editar, eliminar)
+- Página de detalle para cada nota
+- Layout minimalista
+- Integración directa con backend en Docker
 
 ---
 
-## 📂 Estructura de carpetas
+## 🧱 Tecnologías utilizadas
 
-src/
-├── auth/ # Login, estrategia JWT y decoradores
-│ └── decorators/
-│ └── strategies/
-├── common/ # Middlewares y filtros globales
-│ └── filters/
-│ └── middleware/
-├── config/ # Configuración de base de datos
-├── modules/ # Módulos del dominio
-│ └── notes/
-├── users/ # Módulo de usuarios
+| Capa      | Stack                                                  |
+|-----------|--------------------------------------------------------|
+| Backend   | NestJS 11+, TypeORM, Passport JWT, Swagger, MySQL     |
+| Frontend  | Next.js 15 (App Router), React 19, Tailwind CSS, ShadCN |
+| Infra     | Docker, Docker Compose, ESLint, Prettier               |
+
+---
+
+## 📂 Estructura general del proyecto
+
+personal-notes-api/
+├── backend/ # API NestJS
+├── frontend/ # App Next.js
+├── docker-compose.yml
+├── README.md
+└── build.sh
 
 
 ---
 
-## 🔐 Autenticación
-
-| Método | Ruta             | Descripción                         |
-|--------|------------------|-------------------------------------|
-| POST   | `/auth/login`    | Iniciar sesión y obtener JWT        |
-| POST   | `/users`         | Registrar nuevo usuario             |
-| GET    | `/users/me`      | Ver perfil autenticado (protegido) |
-
----
-
-## 📝 Endpoints de Notas (`/api/v1/notes`)
-
-> Todos protegidos con JWT y verificación de propiedad.
-
-| Método | Ruta             | Descripción                      |
-|--------|------------------|----------------------------------|
-| POST   | `/`              | Crear una nueva nota             |
-| GET    | `/`              | Listar todas las notas del usuario |
-| GET    | `/:id`           | Obtener una nota específica      |
-| PATCH  | `/:id`           | Actualizar una nota              |
-| DELETE | `/:id`           | Eliminar una nota                |
-
----
-
-## 📚 Documentación adicional
-
-- Diagramas PlantUML:
-    - [Entidades](./docs/diagrams/entities.puml)
-    - [Secuencia - GET /users/me](./docs/diagrams/get-profile-sequence.puml)
-
-
-## 📦 Instalación
+## 📦 Instalación y ejecución con Docker
 
 ```bash
 # 1. Clona el repositorio
 git clone https://github.com/usuario/personal-notes-api.git
+cd personal-notes-api
 
-# 2. Configura variables de entorno
+# 2. Configura variables si es necesario
 cp .env.example .env
 
-# 3. Levanta los servicios con Docker
+# 3. Construye y levanta los contenedores
 ./build.sh
 ```
 
-## 📚 Documentación Swagger
-Una vez el proyecto esté corriendo, accede a:
+## 🔗 Accesos rápidos
+Frontend: http://localhost:3001
 
-http://localhost:3000/api/v1/docs
+Backend Swagger: http://localhost:3000/api/v1/docs
 
-Genera el JSON con:
+## 📌 Endpoints backend
+🔐 Autenticación
+Método	Ruta	Descripción
+POST	/auth/login	Iniciar sesión y obtener JWT
+POST	/users	Registrar nuevo usuario
+GET	/users/me	Ver perfil autenticado
+
+## 📄 Notas (/api/v1/notes)
+Protegidas por JWT y ownership.
+
+Método	Ruta	Descripción
+GET	/	Listar notas del usuario
+POST	/	Crear nota
+GET	/:id	Ver nota por ID
+PATCH	/:id	Actualizar nota
+DELETE	/:id	Eliminar nota
+
+nota
+
+## 🎨 Detalles del Frontend
+Autenticación	JWT con persistencia en localStorage
+Librería UI	ShadCN UI
+Diseño responsivo	Sí, usando Tailwind y diseño adaptable
+Formularios	Validaciones manuales
+Manejo de errores	Mensajes visuales y toasts
+Rutas protegidas	/notes y /notes/[id]
+Arquitectura	App Router con Server/Client Components
+Estilos	Tailwind CSS configurado vía ShadCN
+
+## Estructura
+frontend/
+├── app/
+│   ├── login/
+│   ├── register/
+│   ├── notes/
+│   │   ├── [id]/page.tsx
+│   │   ├── components/
+│   │   │   ├── NoteForm.tsx
+│   │   │   ├── NoteCard.tsx
+│   │   │   └── NoteList.tsx
+│   ├── layout.tsx
+│   └── globals.css
+├── components/       # Componentes de UI importados de ShadCN
+├── lib/utils.ts      # Función `cn` de utilidades (ShadCN)
+└── components.json   # Configuración CLI ShadCN
+
+## 📚 Documentación adicional
+Diagrama de secuencia: docs/diagrams
+
+OpenAPI JSON:
 
 curl http://localhost:3000/api/v1/docs-json > openapi.json
 
 ## ✅ Estado del proyecto
-Backend completo (login, JWT, CRUD, middleware, validaciones)
+✅ Backend completo y probado (NestJS)
 
-Frontend reactivo
+✅ Frontend funcional y responsive (Next.js + ShadCN)
 
-Docker listo para producción
+✅ Docker para frontend, backend y base de datos
 
-Documentación Swagger incluida
+✅ Documentación técnica incluida
+
+✅ Validaciones y estructura profesional
 
 ## 👤 Autor
 Andrés Tapias
-- 📧 andresftat4@gmail.com
-- 🌐 LinkedIn: https://www.linkedin.com/in/andr%C3%A9s-tapias-40a4a1370/
+📧 andresftat4@gmail.com
+🔗 LinkedIn: https://www.linkedin.com/in/andr%C3%A9s-tapias-40a4a1370/
