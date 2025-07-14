@@ -18,6 +18,22 @@ services:
       - DB_DATABASE=notes_db
       - JWT_SECRET=superSecretKey
       - JWT_EXPIRES_IN=1d
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: personal-notes-frontend
+    ports:
+      - "3001:3001"
+    depends_on:
+      - api
+    environment:
+      - NEXT_PUBLIC_API_URL=http://api:3000
+    networks:
+      - app-network
 
   db:
     image: mysql:8.0
@@ -29,6 +45,12 @@ services:
       MYSQL_DATABASE: notes_db
     volumes:
       - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
 
 volumes:
   mysql-data:
+
+networks:
+  app-network:
+    driver: bridge

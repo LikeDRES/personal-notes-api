@@ -2,5 +2,12 @@
   "dependencies": {
     "@nestjs/swagger": "^11.2.0",
     "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.11",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "postcss-import": "^16.1.1",
+    "tailwindcss": "^4.1.11"
   }
 }
